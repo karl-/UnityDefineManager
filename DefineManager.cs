@@ -1,5 +1,7 @@
 /**
  *	Editor Wizard for easily managing global defines in Unity
+ *	Place in Assets/Editor folder, or if you choose to place elsewhere 
+ *	be sure to also modify the DEF_MANAGER_PATH constant.
  *	@khenkel
  */
 
@@ -12,6 +14,8 @@ using System.Text;
 
 public class DefineManager : EditorWindow
 {
+	const string DEF_MANAGER_PATH = "Assets/Editor/DefineManager.cs";
+	
 	enum Compiler
 	{
 		CSharp,
@@ -162,7 +166,7 @@ public class DefineManager : EditorWindow
 				break;
 		}
 
-		AssetDatabase.ImportAsset("Assets/Bugger/DefineManager.cs", ImportAssetOptions.ForceUpdate);
+		AssetDatabase.ImportAsset(DEF_MANAGER_PATH, ImportAssetOptions.ForceUpdate);
 	}
 
 	List<string> ParseRspFile(string path)
