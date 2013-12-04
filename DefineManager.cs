@@ -193,13 +193,12 @@ public class DefineManager : EditorWindow
 		if(defs.Count < 1 && File.Exists(path))
 		{
 			File.Delete(path);
+		
+			if(File.Exists(path + ".meta"))
+				File.Delete(path + ".meta");
+				
 			AssetDatabase.Refresh();
 			return;
-		}
-		else
-		{
-			if(!File.Exists(path))
-				File.Create(path);
 		}
 
 		StringBuilder sb = new StringBuilder();
