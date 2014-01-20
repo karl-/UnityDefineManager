@@ -139,7 +139,11 @@ public class DefineManager : EditorWindow
 			GUI.backgroundColor = Color.red;
 			if(GUILayout.Button("Apply All", GUILayout.MaxWidth(64)))
 				for(int i = 0; i < COMPILER_COUNT; i++)
+				{
 					SetDefines((Compiler)i, defs);
+					AssetDatabase.ImportAsset(DEF_MANAGER_PATH, ImportAssetOptions.ForceUpdate);
+					OnEnable();
+				}
 		
 		GUILayout.EndHorizontal();
 		GUI.backgroundColor = oldColor;
@@ -165,8 +169,6 @@ public class DefineManager : EditorWindow
 				WriteDefines(EDITOR_PATH, defs);
 				break;
 		}
-
-		AssetDatabase.ImportAsset(DEF_MANAGER_PATH, ImportAssetOptions.ForceUpdate);
 	}
 
 	List<string> ParseRspFile(string path)
