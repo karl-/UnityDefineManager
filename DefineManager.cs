@@ -133,9 +133,13 @@ public class DefineManager : EditorWindow
 
 		GUILayout.BeginHorizontal();
 			GUI.backgroundColor = Color.green;
-			if( GUILayout.Button("Apply") )	
+			if( GUILayout.Button("Apply") )
+			{
 				SetDefines(compiler, defs);
-		
+				AssetDatabase.ImportAsset(DEF_MANAGER_PATH, ImportAssetOptions.ForceUpdate);
+				OnEnable();
+			}
+
 			GUI.backgroundColor = Color.red;
 			if(GUILayout.Button("Apply All", GUILayout.MaxWidth(64)))
 				for(int i = 0; i < COMPILER_COUNT; i++)
