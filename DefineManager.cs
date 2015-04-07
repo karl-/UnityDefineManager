@@ -1,7 +1,5 @@
 /**
  *	Editor Wizard for easily managing global defines in Unity
- *	Place in Assets/Editor folder, or if you choose to place elsewhere 
- *	be sure to also modify the DEF_MANAGER_PATH constant.
  *	@khenkel
  */
 
@@ -46,6 +44,11 @@ public class DefineManager : EditorWindow
 
 	void OnEnable()
 	{
+		ParseDefineFiles();
+	}
+
+	void ParseDefineFiles()
+	{
 		csDefines = ParseRspFile(CSHARP_PATH);
 		usDefines = ParseRspFile(UNITYSCRIPT_PATH);
 		booDefines = ParseRspFile(BOO_PATH);
@@ -79,7 +82,10 @@ public class DefineManager : EditorWindow
 			}
 
 			if(GUILayout.Button( ((Compiler)i).ToString(), st))
+			{
 				compiler = (Compiler)i;
+				ParseDefineFiles();
+			}
 
 			GUI.backgroundColor = oldColor;
 		}
@@ -137,16 +143,16 @@ public class DefineManager : EditorWindow
 			{
 				SetDefines(compiler, defs);
 				AssetDatabase.ImportAsset(DEF_MANAGER_PATH, ImportAssetOptions.ForceUpdate);
-				OnEnable();
+				ParseDefineFiles();
 			}
-
+		
 			GUI.backgroundColor = Color.red;
 			if(GUILayout.Button("Apply All", GUILayout.MaxWidth(64)))
 				for(int i = 0; i < COMPILER_COUNT; i++)
 				{
 					SetDefines((Compiler)i, defs);
 					AssetDatabase.ImportAsset(DEF_MANAGER_PATH, ImportAssetOptions.ForceUpdate);
-					OnEnable();
+					ParseDefineFiles();		
 				}
 		
 		GUILayout.EndHorizontal();
@@ -199,10 +205,7 @@ public class DefineManager : EditorWindow
 		if(defs.Count < 1 && File.Exists(path))
 		{
 			File.Delete(path);
-		
-			if(File.Exists(path + ".meta"))
-				File.Delete(path + ".meta");
-				
+			File.Delete(path + ".meta");
 			AssetDatabase.Refresh();
 			return;
 		}
