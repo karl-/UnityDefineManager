@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu]
 [SuppressMessage("ReSharper", "NotAccessedField.Local")]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class ScriptingDefineObject : ScriptableObject

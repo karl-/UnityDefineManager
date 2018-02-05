@@ -13,7 +13,7 @@ using System.Text;
 public class DefineManager : EditorWindow
 {
 	const string DEF_MANAGER_PATH = "Assets/Editor/DefineManager.cs";
-	
+
 	enum Compiler
 	{
 		CSharp,
@@ -31,12 +31,12 @@ public class DefineManager : EditorWindow
 	const string UNITYSCRIPT_PATH 	= "Assets/us.rsp";
 	const string BOO_PATH 			= "Assets/boo.rsp";
 
-	List<string> csDefines = new List<string>(); 
-	List<string> booDefines = new List<string>(); 
-	List<string> usDefines = new List<string>(); 
-	List<string> editorDefines = new List<string>(); 
+	List<string> csDefines = new List<string>();
+	List<string> booDefines = new List<string>();
+	List<string> usDefines = new List<string>();
+	List<string> editorDefines = new List<string>();
 
-	[MenuItem("Window/Define Manager")]
+	[MenuItem("Window/Global Defines")]
 	public static void OpenDefManager()
 	{
 		EditorWindow.GetWindow<DefineManager>(true, "Global Define Manager", true);
@@ -62,7 +62,7 @@ public class DefineManager : EditorWindow
 		Color oldColor = GUI.backgroundColor;
 
 		GUILayout.BeginHorizontal();
-		for(int i = 0; i < COMPILER_COUNT; i++)	
+		for(int i = 0; i < COMPILER_COUNT; i++)
 		{
 			if(i == (int)compiler)
 				GUI.backgroundColor = Color.gray;
@@ -90,7 +90,7 @@ public class DefineManager : EditorWindow
 			GUI.backgroundColor = oldColor;
 		}
 		GUILayout.EndHorizontal();
-		
+
 		switch(compiler)
 		{
 			case Compiler.CSharp:
@@ -116,9 +116,9 @@ public class DefineManager : EditorWindow
 		for(int i = 0; i < defs.Count; i++)
 		{
 			GUILayout.BeginHorizontal();
-				
+
 				defs[i] = EditorGUILayout.TextField(defs[i]);
-				
+
 				GUI.backgroundColor = Color.red;
 				if(GUILayout.Button("x", GUIStyle.none, GUILayout.MaxWidth(18)))
 					defs.RemoveAt(i);
@@ -127,11 +127,11 @@ public class DefineManager : EditorWindow
 			GUILayout.EndHorizontal();
 
 		}
-		
+
 		GUILayout.Space(4);
 
 		GUI.backgroundColor = Color.cyan;
-		if(GUILayout.Button("Add"))	
+		if(GUILayout.Button("Add"))
 			defs.Add("NEW_DEFINE");
 
 		GUILayout.EndScrollView();
@@ -145,16 +145,16 @@ public class DefineManager : EditorWindow
 				AssetDatabase.ImportAsset(DEF_MANAGER_PATH, ImportAssetOptions.ForceUpdate);
 				ParseDefineFiles();
 			}
-		
+
 			GUI.backgroundColor = Color.red;
 			if(GUILayout.Button("Apply All", GUILayout.MaxWidth(64)))
 				for(int i = 0; i < COMPILER_COUNT; i++)
 				{
 					SetDefines((Compiler)i, defs);
 					AssetDatabase.ImportAsset(DEF_MANAGER_PATH, ImportAssetOptions.ForceUpdate);
-					ParseDefineFiles();		
+					ParseDefineFiles();
 				}
-		
+
 		GUILayout.EndHorizontal();
 		GUI.backgroundColor = oldColor;
 	}
@@ -170,7 +170,7 @@ public class DefineManager : EditorWindow
 			case Compiler.UnityScript:
 				WriteDefines(UNITYSCRIPT_PATH, defs);
 				break;
-			
+
 			case Compiler.Boo:
 				WriteDefines(BOO_PATH, defs);
 				break;
@@ -212,7 +212,7 @@ public class DefineManager : EditorWindow
 
 		StringBuilder sb = new StringBuilder();
 		sb.Append("-define:");
-		
+
 		for(int i = 0; i < defs.Count; i++)
 		{
 			sb.Append(defs[i]);
