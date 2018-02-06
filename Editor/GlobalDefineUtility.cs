@@ -1,6 +1,7 @@
 using UnityEditor;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Parabox.DefineManager
@@ -14,12 +15,9 @@ namespace Parabox.DefineManager
 
 	static class GlobalDefineUtility
 	{
-		const string k_DefManagerPath = "Assets/Editor/DefineManager.cs";
-
 		// http://forum.unity3d.com/threads/93901-global-define/page2
 		// Do not modify these paths
-		const int k_CompilerCount = 4;
-		const string k_CSharpPath = "Assets/smcs.rsp";
+		const string k_CSharpPath = "Assets/mcs.rsp";
 		const string k_EditorPath = "Assets/gmcs.rsp";
 
 		public static string[] GetDefines(Compiler compiler)
@@ -45,7 +43,10 @@ namespace Parabox.DefineManager
 					break;
 			}
 
-			AssetDatabase.ImportAsset(k_CSharpPath);
+			string first = Directory.GetFiles("Assets", "*.cs", SearchOption.AllDirectories).FirstOrDefault();
+
+			if(!string.IsNullOrEmpty(first))
+				AssetDatabase.ImportAsset(first);
 		}
 
 		public static string[] ParseRspFile(string path)

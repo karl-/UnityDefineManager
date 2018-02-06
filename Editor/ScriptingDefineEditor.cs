@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -20,6 +19,23 @@ namespace Parabox.DefineManager
 		SerializedProperty m_Defines;
 		SerializedProperty m_IsApplied;
 		BuildTargetGroup m_CurrentTargetGroup;
+
+		static class Styles
+		{
+			public static GUIStyle listContainer;
+			static bool s_IsInitialized;
+
+			public static void Init()
+			{
+				if (s_IsInitialized)
+					return;
+				s_IsInitialized = true;
+				listContainer = new GUIStyle()
+				{
+					margin = new RectOffset(4, 4, 4, 4)
+				};
+			}
+		}
 
 		void OnEnable()
 		{
@@ -110,6 +126,8 @@ namespace Parabox.DefineManager
 			m_IsApplied.boolValue = true;
 
 			serializedObject.ApplyModifiedProperties();
+
+			GUI.FocusControl("");
 		}
 
 		void OnDrawHeader(Rect rect)
@@ -133,11 +151,16 @@ namespace Parabox.DefineManager
 
 		public override void OnInspectorGUI()
 		{
+			Styles.Init();
+
 			serializedObject.Update();
 
 			Color oldColor = GUI.backgroundColor;
 
+			GUILayout.Space(2);
+
 			GUILayout.BeginHorizontal();
+
 			for (int i = 0; i < k_CompilerCount; i++)
 			{
 				if (i == m_Compiler.intValue)
@@ -172,6 +195,8 @@ namespace Parabox.DefineManager
 			{
 				var cur = ((BuildTargetGroup) (m_BuildTarget.intValue));
 
+				GUILayout.Space(3);
+
 				EditorGUI.BeginChangeCheck();
 				cur = (BuildTargetGroup) EditorGUILayout.EnumPopup(cur);
 				if (EditorGUI.EndChangeCheck())
@@ -179,9 +204,14 @@ namespace Parabox.DefineManager
 			}
 
 			EditorGUI.BeginChangeCheck();
+
+			GUILayout.BeginVertical(Styles.listContainer);
+
 			m_ReorderableList.DoLayoutList();
 			if (EditorGUI.EndChangeCheck())
 				m_IsApplied.boolValue = false;
+
+			GUILayout.EndVertical();
 
 			GUILayout.BeginHorizontal();
 
