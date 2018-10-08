@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace Parabox.DefineManager
+namespace Parabox.Debug.DefineManager
 {
 	[CustomEditor(typeof(ScriptingDefineObject))]
 	public class ScriptingDefineEditor : Editor
@@ -11,8 +11,8 @@ namespace Parabox.DefineManager
 		const int k_CompilerCount = 3;
 		ReorderableList m_ReorderableList;
 
-		string[] m_BuildTargetDisplayNames;
-		BuildTargetGroup[] m_BuildTargetValues;
+//		string[] m_BuildTargetDisplayNames;
+//		BuildTargetGroup[] m_BuildTargetValues;
 
 		SerializedProperty m_Compiler;
 		SerializedProperty m_BuildTarget;
@@ -39,8 +39,8 @@ namespace Parabox.DefineManager
 
 		void OnEnable()
 		{
-			m_BuildTargetValues = (BuildTargetGroup[]) System.Enum.GetValues(typeof(BuildTargetGroup));
-			m_BuildTargetDisplayNames = m_BuildTargetValues.Select(x => x.ToString()).ToArray();
+//			m_BuildTargetValues = (BuildTargetGroup[]) System.Enum.GetValues(typeof(BuildTargetGroup));
+//			m_BuildTargetDisplayNames = m_BuildTargetValues.Select(x => x.ToString()).ToArray();
 
 			m_Compiler = serializedObject.FindProperty("m_Compiler");
 			SetCompilerTarget((Compiler) m_Compiler.intValue);

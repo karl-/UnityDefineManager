@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Parabox.DefineManager
+namespace Parabox.Debug.DefineManager
 {
 	[SuppressMessage("ReSharper", "NotAccessedField.Local")]
 	[SuppressMessage("ReSharper", "InconsistentNaming")]
