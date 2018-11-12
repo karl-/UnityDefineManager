@@ -1,5 +1,5 @@
 {
-    "name": "Parabox.Debug.Define",
+    "name": "Unity.Karl.DefineManager",
     "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [

@@ -1,0 +1,9 @@
+{
+	"name": "com.karl.define-manager",
+	"displayName":"Define Manager",
+	"version": "0.1.0-preview",
+	"unity": "2018.1",
+	"description": "",
+	"dependencies": {
+	}
+}

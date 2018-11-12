@@ -7,10 +7,10 @@ namespace Parabox.Debug.DefineManager
 {
 	public class ScriptingDefineWindow : EditorWindow
 	{
-		[MenuItem("Window/Platform Defines")]
+		[MenuItem("Window/Plugins/Scripting Define Symbol Editor")]
 		static void Init()
 		{
-			GetWindow<ScriptingDefineWindow>(true, "Platform Defines", true);
+			GetWindow<ScriptingDefineWindow>(true, "Define Symbol Editor", true);
 		}
 
 		Editor m_Editor;
